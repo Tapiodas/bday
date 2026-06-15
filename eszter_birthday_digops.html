@@ -1,20 +1,33 @@
-
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Eszter! 🎉</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap');
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  .root {
-    font-family: 'Space Grotesk', var(--font-sans), sans-serif;
-    min-height: 600px;
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: #f8f7ff;
+    min-height: 100vh;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
+    color: #1a1a2e;
+  }
+
+  canvas.conf {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 20;
   }
 
   .hero {
     text-align: center;
-    padding: 3rem 2rem 1.5rem;
-    position: relative;
-    z-index: 2;
+    padding: 3.5rem 2rem 1.5rem;
   }
 
   .tag {
@@ -25,7 +38,7 @@
     color: #534AB7;
     font-size: 11px;
     font-weight: 600;
-    padding: 4px 14px;
+    padding: 5px 16px;
     border-radius: 20px;
     margin-bottom: 1.4rem;
     text-transform: uppercase;
@@ -33,9 +46,9 @@
   }
 
   .hero-name {
-    font-size: clamp(2.6rem, 7vw, 5rem);
+    font-size: clamp(2.8rem, 8vw, 5.2rem);
     font-weight: 700;
-    color: var(--color-text-primary);
+    color: #1a1a2e;
     line-height: 1.05;
     letter-spacing: -0.03em;
     margin-bottom: 0.6rem;
@@ -45,19 +58,36 @@
 
   .hero-sub {
     font-size: 1rem;
-    color: var(--color-text-secondary);
+    color: #555;
     margin-bottom: 2rem;
-    line-height: 1.6;
-    max-width: 400px;
+    line-height: 1.65;
+    max-width: 420px;
     margin-left: auto;
     margin-right: auto;
   }
 
+  /* Orbit */
   .orbit-area {
     position: relative;
     width: 260px;
     height: 260px;
-    margin: 0 auto 1.5rem;
+    margin: 0 auto 1rem;
+  }
+
+  .orbit-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 230px; height: 230px;
+    margin-left: -115px; margin-top: -115px;
+    border: 0.5px dashed #b0aee8;
+    border-radius: 50%;
+    animation: spinring 18s linear infinite;
+    z-index: 1;
+  }
+
+  @keyframes spinring {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
 
   .center-circle {
@@ -71,50 +101,32 @@
     align-items: center;
     justify-content: center;
     color: #fff;
-    font-size: 26px;
+    font-size: 28px;
     font-weight: 700;
     letter-spacing: -1px;
     z-index: 3;
     box-shadow: 0 0 0 8px #EEEDFE;
   }
 
-  .orbit-ring {
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 230px; height: 230px;
-    margin-left: -115px; margin-top: -115px;
-    border: 0.5px dashed #CCC;
-    border-radius: 50%;
-    animation: spinring 18s linear infinite;
-    z-index: 1;
-  }
-
-  @keyframes spinring {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
   .planet {
     position: absolute;
     top: 50%; left: 50%;
-    width: 52px; height: 52px;
-    margin-left: -26px; margin-top: -26px;
-    background: var(--color-background-primary);
-    border: 0.5px solid var(--color-border-secondary);
+    width: 54px; height: 54px;
+    margin-left: -27px; margin-top: -27px;
+    background: #fff;
+    border: 1px solid #e0defa;
     border-radius: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
-    cursor: default;
-    transition: transform 0.2s;
+    font-size: 20px;
     z-index: 4;
   }
 
   .planet span {
     font-size: 9px;
-    color: var(--color-text-secondary);
+    color: #888;
     font-weight: 500;
     margin-top: 1px;
     text-align: center;
@@ -127,19 +139,44 @@
   .p4 { transform: translate(-67px, 96px); }
   .p5 { transform: translate(-109px, -33px); }
 
+  /* Button */
+  .cta-wrap {
+    text-align: center;
+    padding: 1rem 0 0.5rem;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    background: #7F77DD;
+    color: #fff;
+    border: none;
+    padding: 14px 30px;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: transform 0.15s, background 0.15s;
+  }
+
+  .cta-btn:hover { background: #534AB7; transform: scale(1.04); }
+  .cta-btn:active { transform: scale(0.97); }
+  .cta-btn:disabled { opacity: 0.65; cursor: default; transform: none; }
+
+  /* Cards */
   .cards-section {
     max-width: 640px;
-    margin: 0 auto;
-    padding: 0 1.25rem 1rem;
-    position: relative;
-    z-index: 2;
+    margin: 2rem auto 0;
+    padding: 0 1.25rem;
   }
 
   .section-label {
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--color-text-tertiary);
+    color: #aaa;
     margin-bottom: 0.9rem;
     font-weight: 500;
   }
@@ -151,12 +188,12 @@
   }
 
   .card {
-    background: var(--color-background-primary);
-    border: 0.5px solid var(--color-border-tertiary);
-    border-radius: 12px;
-    padding: 1rem 1.1rem;
+    background: #fff;
+    border: 1px solid #e8e6f8;
+    border-radius: 14px;
+    padding: 1rem 1.15rem;
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(12px);
     transition: opacity 0.45s, transform 0.45s;
   }
 
@@ -171,8 +208,7 @@
   .card:nth-child(4).show { transition-delay: 0.35s; }
 
   .card-icon {
-    font-size: 22px;
-    color: #7F77DD;
+    font-size: 24px;
     margin-bottom: 7px;
     display: block;
   }
@@ -180,120 +216,82 @@
   .card-title {
     font-size: 13px;
     font-weight: 600;
-    color: var(--color-text-primary);
+    color: #1a1a2e;
     margin-bottom: 4px;
     display: block;
   }
 
   .card-body {
     font-size: 12px;
-    color: var(--color-text-secondary);
-    line-height: 1.6;
+    color: #666;
+    line-height: 1.65;
   }
-
-  .cta-wrap {
-    text-align: center;
-    padding: 1.5rem 0 0.5rem;
-    position: relative;
-    z-index: 2;
-  }
-
-  .cta-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #7F77DD;
-    color: #fff;
-    border: none;
-    padding: 13px 28px;
-    border-radius: 50px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: inherit;
-    transition: transform 0.15s, background 0.15s;
-  }
-
-  .cta-btn:hover { background: #534AB7; transform: scale(1.04); }
-  .cta-btn:active { transform: scale(0.97); }
-  .cta-btn:disabled { opacity: 0.6; cursor: default; transform: none; }
 
   .footer {
     text-align: center;
-    font-size: 11px;
-    color: var(--color-text-tertiary);
-    padding: 1.5rem 1rem 2rem;
-    position: relative;
-    z-index: 2;
-  }
-
-  canvas.conf {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 20;
+    font-size: 12px;
+    color: #aaa;
+    padding: 2.5rem 1rem 2rem;
   }
 
   @media (max-width: 480px) {
     .cards-grid { grid-template-columns: 1fr; }
   }
 </style>
+</head>
+<body>
 
 <canvas class="conf" id="cc"></canvas>
 
-<div class="root">
-  <div class="hero">
-    <div class="tag"><i class="ti ti-crown" aria-hidden="true"></i> DigOps Lead</div>
-    <div class="hero-name">Happy Birthday,<br><span>Eszter!</span></div>
-    <div class="hero-sub">The one who always knows the answer, always makes time for people, and somehow keeps the whole team going.</div>
+<div class="hero">
+  <div class="tag">👑 DigOps Lead</div>
+  <div class="hero-name">Happy Birthday,<br><span>Eszter!</span></div>
+  <div class="hero-sub">The one who always knows the answer, always makes time for people, and somehow keeps the whole team going.</div>
 
-    <div class="orbit-area" id="orbitArea">
-      <div class="orbit-ring"></div>
-      <div class="center-circle">E</div>
-      <div class="planet p1"><i class="ti ti-users" aria-hidden="true"></i><span>Team</span></div>
-      <div class="planet p2"><i class="ti ti-bulb" aria-hidden="true"></i><span>Ideas</span></div>
-      <div class="planet p3"><i class="ti ti-heart" aria-hidden="true"></i><span>Care</span></div>
-      <div class="planet p4"><i class="ti ti-trophy" aria-hidden="true"></i><span>Wins</span></div>
-      <div class="planet p5"><i class="ti ti-messages" aria-hidden="true"></i><span>Help</span></div>
-    </div>
+  <div class="orbit-area">
+    <div class="orbit-ring"></div>
+    <div class="center-circle">E</div>
+    <div class="planet p1">👥<span>Team</span></div>
+    <div class="planet p2">💡<span>Ideas</span></div>
+    <div class="planet p3">❤️<span>Care</span></div>
+    <div class="planet p4">🏆<span>Wins</span></div>
+    <div class="planet p5">🤝<span>Help</span></div>
   </div>
-
-  <div class="cta-wrap">
-    <button class="cta-btn" id="celebBtn" onclick="celebrate()">
-      <i class="ti ti-confetti" aria-hidden="true"></i>
-      Celebrate Eszter
-    </button>
-  </div>
-
-  <div class="cards-section" style="margin-top:1.5rem">
-    <div class="section-label">What makes her great</div>
-    <div class="cards-grid" id="cardsGrid">
-      <div class="card">
-        <i class="ti ti-door-enter card-icon" aria-hidden="true"></i>
-        <span class="card-title">Open door, always</span>
-        <span class="card-body">No matter how busy things get, Eszter always has time for a question, a problem, or just a chat. That's rare in a lead.</span>
-      </div>
-      <div class="card">
-        <i class="ti ti-compass card-icon" aria-hidden="true"></i>
-        <span class="card-title">Clarity in the chaos</span>
-        <span class="card-body">When everything feels unclear, she has a way of cutting through the noise and pointing the team in the right direction.</span>
-      </div>
-      <div class="card">
-        <i class="ti ti-user-heart card-icon" aria-hidden="true"></i>
-        <span class="card-title">People over process</span>
-        <span class="card-body">She doesn't just manage tasks — she notices when someone's struggling and actually does something about it.</span>
-      </div>
-      <div class="card">
-        <i class="ti ti-flame card-icon" aria-hidden="true"></i>
-        <span class="card-title">Raises the bar quietly</span>
-        <span class="card-body">No loud proclamations. Just consistently great work and a team that keeps getting better because of her example.</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="footer">From the whole DigOps team, with appreciation 💜</div>
 </div>
+
+<div class="cta-wrap">
+  <button class="cta-btn" id="celebBtn" onclick="celebrate()">
+    🎉 Celebrate Eszter
+  </button>
+</div>
+
+<div class="cards-section">
+  <div class="section-label">What makes her great</div>
+  <div class="cards-grid" id="cardsGrid">
+    <div class="card">
+      <span class="card-icon">🚪</span>
+      <span class="card-title">Open door, always</span>
+      <span class="card-body">No matter how busy things get, Eszter always has time for a question, a problem, or just a chat. That's rare in a lead.</span>
+    </div>
+    <div class="card">
+      <span class="card-icon">🧭</span>
+      <span class="card-title">Clarity in the chaos</span>
+      <span class="card-body">When everything feels unclear, she has a way of cutting through the noise and pointing the team in the right direction.</span>
+    </div>
+    <div class="card">
+      <span class="card-icon">🫶</span>
+      <span class="card-title">People over process</span>
+      <span class="card-body">She doesn't just manage tasks — she notices when someone's struggling and actually does something about it.</span>
+    </div>
+    <div class="card">
+      <span class="card-icon">🔥</span>
+      <span class="card-title">Raises the bar quietly</span>
+      <span class="card-body">No loud proclamations. Just consistently great work and a team that keeps getting better because of her example.</span>
+    </div>
+  </div>
+</div>
+
+<div class="footer">From the whole DigOps team, with appreciation 💜</div>
 
 <script>
   let done = false;
@@ -303,8 +301,7 @@
     done = true;
     const btn = document.getElementById('celebBtn');
     btn.disabled = true;
-    btn.innerHTML = '<i class="ti ti-check" aria-hidden="true"></i> Celebrated!';
-
+    btn.innerHTML = '✅ Celebrated!';
     document.querySelectorAll('.card').forEach(c => c.classList.add('show'));
     launchConfetti();
   }
@@ -315,8 +312,8 @@
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const colors = ['#7F77DD','#AFA9EC','#EEEDFE','#F0997B','#5DCAA5','#FAC775','#85B7EB'];
-    const particles = Array.from({length: 130}, () => ({
+    const colors = ['#7F77DD','#AFA9EC','#EEEDFE','#F0997B','#5DCAA5','#FAC775','#85B7EB','#ED93B1'];
+    const particles = Array.from({length: 140}, () => ({
       x: Math.random() * canvas.width,
       y: -10 - Math.random() * 120,
       w: 6 + Math.random() * 9,
@@ -347,3 +344,5 @@
     draw();
   }
 </script>
+</body>
+</html>

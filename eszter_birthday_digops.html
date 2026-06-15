@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday, Eszter! 🎉</title>
+<title>Boldog születésnapot, Eszter! 🎉</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -66,7 +66,6 @@
     margin-right: auto;
   }
 
-  /* Orbit */
   .orbit-area {
     position: relative;
     width: 260px;
@@ -139,7 +138,6 @@
   .p4 { transform: translate(-67px, 96px); }
   .p5 { transform: translate(-109px, -33px); }
 
-  /* Button */
   .cta-wrap {
     text-align: center;
     padding: 1rem 0 0.5rem;
@@ -165,7 +163,6 @@
   .cta-btn:active { transform: scale(0.97); }
   .cta-btn:disabled { opacity: 0.65; cursor: default; transform: none; }
 
-  /* Cards */
   .cards-section {
     max-width: 640px;
     margin: 2rem auto 0;
@@ -245,53 +242,53 @@
 
 <div class="hero">
   <div class="tag">👑 DigOps Lead</div>
-  <div class="hero-name">Happy Birthday,<br><span>Eszter!</span></div>
-  <div class="hero-sub">The one who always knows the answer, always makes time for people, and somehow keeps the whole team going.</div>
+  <div class="hero-name">Boldog születésnapot,<br><span>Eszter!</span></div>
+  <div class="hero-sub">Aki mindig tudja a választ, mindig van ideje az emberekre, és valahogy az egész csapatot összetartja.</div>
 
   <div class="orbit-area">
     <div class="orbit-ring"></div>
     <div class="center-circle">E</div>
-    <div class="planet p1">👥<span>Team</span></div>
-    <div class="planet p2">💡<span>Ideas</span></div>
-    <div class="planet p3">❤️<span>Care</span></div>
-    <div class="planet p4">🏆<span>Wins</span></div>
-    <div class="planet p5">🤝<span>Help</span></div>
+    <div class="planet p1">👥<span>Csapat</span></div>
+    <div class="planet p2">💡<span>Ötletek</span></div>
+    <div class="planet p3">❤️<span>Törődés</span></div>
+    <div class="planet p4">🏆<span>Sikerek</span></div>
+    <div class="planet p5">🤝<span>Segítség</span></div>
   </div>
 </div>
 
 <div class="cta-wrap">
   <button class="cta-btn" id="celebBtn" onclick="celebrate()">
-    🎉 Celebrate Eszter
+    🎉 Ünnepeljük Esztert!
   </button>
 </div>
 
 <div class="cards-section">
-  <div class="section-label">What makes her great</div>
+  <div class="section-label">Mitől olyan különleges</div>
   <div class="cards-grid" id="cardsGrid">
     <div class="card">
       <span class="card-icon">🚪</span>
-      <span class="card-title">Open door, always</span>
-      <span class="card-body">No matter how busy things get, Eszter always has time for a question, a problem, or just a chat. That's rare in a lead.</span>
+      <span class="card-title">Mindig nyitott ajtó</span>
+      <span class="card-body">Akármennyire is pörög minden körülötte, Eszternek mindig van ideje egy kérdésre, egy problémára, vagy csak egy rövid beszélgetésre. Ez ritka egy leadnél.</span>
     </div>
     <div class="card">
       <span class="card-icon">🧭</span>
-      <span class="card-title">Clarity in the chaos</span>
-      <span class="card-body">When everything feels unclear, she has a way of cutting through the noise and pointing the team in the right direction.</span>
+      <span class="card-title">Érthetőség a káoszban</span>
+      <span class="card-body">Amikor minden zavarosnak tűnik, ő megtalálja a lényeget, és megmutatja a csapatnak, merre kell menni.</span>
     </div>
     <div class="card">
       <span class="card-icon">🫶</span>
-      <span class="card-title">People over process</span>
-      <span class="card-body">She doesn't just manage tasks — she notices when someone's struggling and actually does something about it.</span>
+      <span class="card-title">Az ember az első</span>
+      <span class="card-body">Nem csak a taskokat kezeli — észreveszi, ha valaki küszködi, és tényleg tesz is érte valamit.</span>
     </div>
     <div class="card">
       <span class="card-icon">🔥</span>
-      <span class="card-title">Raises the bar quietly</span>
-      <span class="card-body">No loud proclamations. Just consistently great work and a team that keeps getting better because of her example.</span>
+      <span class="card-title">Csendben emeli a mércét</span>
+      <span class="card-body">Nem nagy bejelentések, nem hangos gesztusok. Csak következetesen jó munka — és egy csapat, ami miatta egyre jobb lesz.</span>
     </div>
   </div>
 </div>
 
-<div class="footer">From the whole DigOps team, with appreciation 💜</div>
+<div class="footer">Az egész DigOps csapattól, szeretettel 💜</div>
 
 <script>
   let done = false;
@@ -301,7 +298,7 @@
     done = true;
     const btn = document.getElementById('celebBtn');
     btn.disabled = true;
-    btn.innerHTML = '✅ Celebrated!';
+    btn.innerHTML = '✅ Megünnepelve!';
     document.querySelectorAll('.card').forEach(c => c.classList.add('show'));
     launchConfetti();
   }

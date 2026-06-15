@@ -1,0 +1,466 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body-wrap {
+    display: block;
+  }
+
+  .birthday-root {
+    font-family: 'Space Grotesk', var(--font-sans), sans-serif;
+    min-height: 100vh;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero {
+    text-align: center;
+    padding: 3.5rem 2rem 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #E1F5EE;
+    color: #0F6E56;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .dot-live {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #1D9E75;
+    animation: pulse 1.4s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  .hero-name {
+    font-size: clamp(2.8rem, 8vw, 5.5rem);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-name span {
+    color: #1D9E75;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+  }
+
+  .trigger-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #1D9E75;
+    color: #fff;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: transform 0.15s, background 0.15s;
+    letter-spacing: 0.01em;
+  }
+
+  .trigger-btn:hover { background: #0F6E56; transform: scale(1.04); }
+  .trigger-btn:active { transform: scale(0.97); }
+
+  .trigger-btn i { font-size: 20px; }
+
+  .pipeline {
+    max-width: 660px;
+    margin: 2.5rem auto 0;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .pipeline-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-tertiary);
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+
+  .steps-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow: hidden;
+  }
+
+  .step {
+    flex: 1;
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: 8px;
+    padding: 10px 12px;
+    position: relative;
+    text-align: left;
+    transition: border-color 0.3s, background 0.3s;
+  }
+
+  .step.done {
+    border-color: #1D9E75;
+    background: #E1F5EE;
+  }
+
+  .step.active {
+    border-color: #1D9E75;
+    background: #E1F5EE;
+    animation: stepglow 0.8s ease-out;
+  }
+
+  @keyframes stepglow {
+    0% { transform: scale(0.96); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+  }
+
+  .step-icon {
+    font-size: 18px;
+    color: #1D9E75;
+    margin-bottom: 3px;
+    display: block;
+  }
+
+  .step.idle .step-icon { color: var(--color-text-tertiary); }
+
+  .step-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    display: block;
+  }
+
+  .step.idle .step-label { color: var(--color-text-secondary); }
+
+  .step-sub {
+    font-size: 10px;
+    color: var(--color-text-secondary);
+    display: block;
+    margin-top: 1px;
+  }
+
+  .arrow-between {
+    width: 20px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-tertiary);
+    font-size: 14px;
+  }
+
+  .wishes-section {
+    max-width: 660px;
+    margin: 2.5rem auto 0;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .wishes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 1rem;
+  }
+
+  .wish-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: 12px;
+    padding: 1rem 1.1rem;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.4s, transform 0.4s;
+  }
+
+  .wish-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .wish-card:nth-child(1).visible { transition-delay: 0.05s; }
+  .wish-card:nth-child(2).visible { transition-delay: 0.15s; }
+  .wish-card:nth-child(3).visible { transition-delay: 0.25s; }
+  .wish-card:nth-child(4).visible { transition-delay: 0.35s; }
+
+  .wish-icon {
+    font-size: 22px;
+    color: #1D9E75;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .wish-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 3px;
+    display: block;
+  }
+
+  .wish-body {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+  }
+
+  .confetti-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .footer-line {
+    text-align: center;
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    padding: 2.5rem 1rem 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .footer-line code {
+    font-family: var(--font-mono);
+    background: var(--color-background-secondary);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+  }
+
+  .counter-badge {
+    display: inline-block;
+    background: #E1F5EE;
+    color: #0F6E56;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 6px;
+    font-family: var(--font-mono);
+  }
+
+  @media (max-width: 480px) {
+    .wishes-grid { grid-template-columns: 1fr; }
+    .steps-row { flex-direction: column; gap: 8px; }
+    .arrow-between { transform: rotate(90deg); }
+  }
+</style>
+
+<canvas class="confetti-canvas" id="confettiCanvas"></canvas>
+
+<div class="birthday-root">
+  <div class="hero">
+    <div class="status-badge">
+      <div class="dot-live"></div>
+      Scenario: birthday.exe
+    </div>
+    <div class="hero-name">Happy Birthday,<br><span>Eszter!</span></div>
+    <div class="hero-sub">DigOps Lead · Automation Queen · Bug Whisperer</div>
+    <button class="trigger-btn" id="triggerBtn" onclick="runBirthday()">
+      <i class="ti ti-player-play" aria-hidden="true"></i>
+      Run scenario
+    </button>
+  </div>
+
+  <div class="pipeline">
+    <div class="pipeline-title">Birthday pipeline <span class="counter-badge" id="runCount">0 runs</span></div>
+    <div class="steps-row">
+      <div class="step idle" id="s1">
+        <i class="ti ti-gift step-icon" aria-hidden="true"></i>
+        <span class="step-label">Trigger</span>
+        <span class="step-sub">Birthday detected</span>
+      </div>
+      <div class="arrow-between"><i class="ti ti-arrow-right" aria-hidden="true"></i></div>
+      <div class="step idle" id="s2">
+        <i class="ti ti-sparkles step-icon" aria-hidden="true"></i>
+        <span class="step-label">Process</span>
+        <span class="step-sub">Wishes compiled</span>
+      </div>
+      <div class="arrow-between"><i class="ti ti-arrow-right" aria-hidden="true"></i></div>
+      <div class="step idle" id="s3">
+        <i class="ti ti-confetti step-icon" aria-hidden="true"></i>
+        <span class="step-label">Deploy</span>
+        <span class="step-sub">Confetti sent</span>
+      </div>
+      <div class="arrow-between"><i class="ti ti-arrow-right" aria-hidden="true"></i></div>
+      <div class="step idle" id="s4">
+        <i class="ti ti-check step-icon" aria-hidden="true"></i>
+        <span class="step-label">Done</span>
+        <span class="step-sub">200 OK 🎉</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wishes-section">
+    <div class="pipeline-title">Output payload — wishes</div>
+    <div class="wishes-grid" id="wishesGrid">
+      <div class="wish-card" id="w1">
+        <i class="ti ti-bolt wish-icon" aria-hidden="true"></i>
+        <span class="wish-title">Zero failed runs</span>
+        <span class="wish-body">May every scenario you design this year execute flawlessly — no 400s, no timeouts, no "unexpected bundle error."</span>
+      </div>
+      <div class="wish-card" id="w2">
+        <i class="ti ti-heart wish-icon" aria-hidden="true"></i>
+        <span class="wish-title">Infinite energy</span>
+        <span class="wish-body">You keep the whole DigOps engine running. Here's to a year where the energy flows in your direction too.</span>
+      </div>
+      <div class="wish-card" id="w3">
+        <i class="ti ti-chart-bar wish-icon" aria-hidden="true"></i>
+        <span class="wish-title">All metrics green</span>
+        <span class="wish-body">May your dashboards stay in the green zone — and for once, may someone else investigate the anomaly.</span>
+      </div>
+      <div class="wish-card" id="w4">
+        <i class="ti ti-star wish-icon" aria-hidden="true"></i>
+        <span class="wish-title">Lead status: legendary</span>
+        <span class="wish-body">You've automated half the company and kept everyone sane doing it. That's not lead level — that's final boss level.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-line">
+    Built with love by the DigOps team · <code>status: 200 OK</code>
+  </div>
+</div>
+
+<script>
+  let runCount = 0;
+  let running = false;
+
+  const steps = ['s1','s2','s3','s4'];
+  const wishes = ['w1','w2','w3','w4'];
+
+  function resetSteps() {
+    steps.forEach(id => {
+      const el = document.getElementById(id);
+      el.className = 'step idle';
+    });
+    wishes.forEach(id => {
+      document.getElementById(id).classList.remove('visible');
+    });
+  }
+
+  function runBirthday() {
+    if (running) return;
+    running = true;
+    resetSteps();
+
+    const btn = document.getElementById('triggerBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="ti ti-loader" style="animation:spin 1s linear infinite" aria-hidden="true"></i> Running...';
+
+    runCount++;
+    document.getElementById('runCount').textContent = runCount + (runCount === 1 ? ' run' : ' runs');
+
+    let delay = 0;
+    steps.forEach((id, i) => {
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        el.className = 'step active';
+        if (i > 0) {
+          document.getElementById(steps[i-1]).className = 'step done';
+        }
+        if (i === steps.length - 1) {
+          setTimeout(() => {
+            el.className = 'step done';
+            launchConfetti();
+            wishes.forEach((wid, wi) => {
+              setTimeout(() => {
+                document.getElementById(wid).classList.add('visible');
+              }, wi * 120);
+            });
+            setTimeout(() => {
+              btn.disabled = false;
+              btn.innerHTML = '<i class="ti ti-refresh" aria-hidden="true"></i> Run again';
+              running = false;
+            }, 1200);
+          }, 500);
+        }
+      }, delay);
+      delay += 600;
+    });
+  }
+
+  function launchConfetti() {
+    const canvas = document.getElementById('confettiCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const colors = ['#1D9E75','#5DCAA5','#9FE1CB','#F0997B','#AFA9EC','#85B7EB','#EF9F27'];
+    const particles = [];
+
+    for (let i = 0; i < 120; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: -10 - Math.random() * 100,
+        w: 6 + Math.random() * 8,
+        h: 4 + Math.random() * 4,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        vx: (Math.random() - 0.5) * 3,
+        vy: 2 + Math.random() * 4,
+        rot: Math.random() * Math.PI * 2,
+        rotV: (Math.random() - 0.5) * 0.2,
+        life: 1
+      });
+    }
+
+    let frame;
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      let alive = false;
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rot += p.rotV;
+        p.vy += 0.06;
+        if (p.y < canvas.height + 20) alive = true;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        ctx.restore();
+      });
+      if (alive) {
+        frame = requestAnimationFrame(draw);
+      } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+    draw();
+  }
+</script>
